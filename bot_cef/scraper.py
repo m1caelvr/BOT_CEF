@@ -1,10 +1,21 @@
+import os
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+import time
+
+if os.getenv("GITHUB_ACTIONS") is None:
+    load_dotenv()
+
+LOGIN = os.getenv("LOGIN")
+SENHA = os.getenv("SENHA")
 
 
-def iniciar_driver():
+def run_driver():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
@@ -19,7 +30,7 @@ def iniciar_driver():
     return driver
 
 
-def acessar_pagina(driver, url):
+def acess_page(driver, url):
     try:
         driver.get(url)
         print("Título da página:", driver.title)
@@ -27,11 +38,27 @@ def acessar_pagina(driver, url):
         print("Erro ao acessar a página:", e)
 
 
+def fill_login_form(driver):
+    try:
+        time.sleep(2)
+        login_input = driver.find_element(By.ID, "login")
+        senha_input = driver.find_element(By.ID, "senha")
+
+        login_input.send_keys(LOGIN)
+        senha_input.send_keys(SENHA)
+        senha_input.send_keys(Keys.RETURN)
+
+        print("Credenciais inseridas com sucesso!")
+    except Exception as e:
+        print("Erro ao preencher o formulário:", e)
+
+
 def run_bot():
     print("Iniciando BOT_CEF...")
-    driver = iniciar_driver()
+    driver = run_driver()
     try:
-        acessar_pagina(driver, "https://eqs.arenanet.com.br/")
+        acess_page(driver, "https://eqs.arenanet.com.br/")
+        fill_login_form(driver)
     finally:
         driver.quit()
         print("Bot finalizado!")

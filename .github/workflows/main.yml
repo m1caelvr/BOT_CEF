@@ -4,20 +4,18 @@ on:
   schedule:
     - cron: "0 9,12,18 * * *"
   workflow_dispatch:
+  push:
+  pull_request:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Clonar repositório
+      - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Instalar Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
-      - name: Configurar Python
+      - name: Configurar ambiente Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
@@ -25,5 +23,21 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: Executar o BOT_CEF
+      - name: Definir variáveis de ambiente
+        run: |
+          echo "LOGIN=${{ secrets.LOGIN }}" >> $GITHUB_ENV
+          echo "SENHA=${{ secrets.SENHA }}" >> $GITHUB_ENV
+
+      - name: Verificar se as variáveis estão definidas
+        run: |
+          if [ -z "$LOGIN" ] || [ -z "$SENHA" ]; then
+            echo "Erro: Variáveis de ambiente não definidas."
+            exit 1
+          fi
+          echo "Variáveis carregadas com sucesso."
+
+      - name: Executar o bot
+        env:
+          LOGIN: ${{ env.LOGIN }}
+          SENHA: ${{ env.SENHA }}
         run: python run.py
