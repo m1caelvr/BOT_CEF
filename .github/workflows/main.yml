@@ -19,6 +19,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
 
       - name: 🚀 Rodar o BOT_CEF para atualizar o CSV
         run: python run.py
