@@ -1,12 +1,13 @@
 import os
-from dotenv import load_dotenv
+import pandas as pd
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
-import time
+from dotenv import load_dotenv
 
 if os.getenv("GITHUB_ACTIONS") is None:
     load_dotenv()
@@ -20,10 +21,6 @@ def run_driver():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--disable-software-rasterizer")
-    chrome_options.add_argument("--log-level=3")
-    chrome_options.add_argument("--disable-logging")
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
@@ -31,34 +28,59 @@ def run_driver():
 
 
 def acess_page(driver, url):
-    try:
-        driver.get(url)
-        print("Título da página:", driver.title)
-    except Exception as e:
-        print("Erro ao acessar a página:", e)
+    driver.get(url)
+    time.sleep(2)
 
 
 def fill_login_form(driver):
-    try:
-        time.sleep(2)
-        login_input = driver.find_element(By.ID, "login")
-        senha_input = driver.find_element(By.ID, "senha")
+    login_input = driver.find_element(By.ID, "login")
+    senha_input = driver.find_element(By.ID, "senha")
 
-        login_input.send_keys(LOGIN)
-        senha_input.send_keys(SENHA)
-        senha_input.send_keys(Keys.RETURN)
+    login_input.send_keys(LOGIN)
+    senha_input.send_keys(SENHA)
+    senha_input.send_keys(Keys.RETURN)
+    time.sleep(3)
 
-        print("Credenciais inseridas com sucesso!")
-    except Exception as e:
-        print("Erro ao preencher o formulário:", e)
+
+def extrair_dados(driver):
+    time.sleep(3)
+
+    # 🔹 Simulando a extração de dados fictícios
+    dados = [
+        {
+            "Prazo": "2025-02-10",
+            "Unidade": "Filial RJ",
+            "Valor": 1500,
+            "Status": "Aprovado",
+        },
+        {
+            "Prazo": "2025-02-15",
+            "Unidade": "Filial SP",
+            "Valor": 2300,
+            "Status": "Pendente",
+        },
+        {
+            "Prazo": "2025-02-20",
+            "Unidade": "Filial MG",
+            "Valor": 1750,
+            "Status": "Rejeitado",
+        },
+    ]
+
+    df = pd.DataFrame(dados)
+
+    path = os.path.join(os.getcwd(), "data", "dados.csv")
+    df.to_csv(path, index=False)
+    print(f"📂 Dados extraídos e salvos em '{path}'")
 
 
 def run_bot():
-    print("Iniciando BOT_CEF...")
+    print("🔹 Iniciando BOT_CEF...")
     driver = run_driver()
     try:
         acess_page(driver, "https://eqs.arenanet.com.br/")
         fill_login_form(driver)
+        extrair_dados(driver)
     finally:
         driver.quit()
-        print("Bot finalizado!")
+        print("✅ Bot finalizado!")

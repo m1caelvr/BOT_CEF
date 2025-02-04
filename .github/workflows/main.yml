@@ -1,11 +1,12 @@
-name: Executar BOT_CEF
+name: Executar BOT_CEF e Atualizar Dados
 
 on:
   schedule:
     - cron: "0 11,13,20 * * *"
   workflow_dispatch:
   push:
-  pull_request:
+    branches:
+      - main
 
 jobs:
   run-bot:
@@ -28,16 +29,18 @@ jobs:
           echo "LOGIN=${{ secrets.LOGIN }}" >> $GITHUB_ENV
           echo "SENHA=${{ secrets.SENHA }}" >> $GITHUB_ENV
 
-      - name: Verificar se as variáveis estão definidas
-        run: |
-          if [ -z "$LOGIN" ] || [ -z "$SENHA" ]; then
-            echo "Erro: Variáveis de ambiente não definidas."
-            exit 1
-          fi
-          echo "Variáveis carregadas com sucesso."
-
       - name: Executar o bot
+        run: python bot_cef/scraper.py
+
+      - name: Configurar Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Adicionar e commitar arquivo atualizado
+        run: |
+          git add data/dados.csv
+          git commit -m "Atualizando dados extraídos pelo BOT_CEF"
+          git push
         env:
-          LOGIN: ${{ env.LOGIN }}
-          SENHA: ${{ env.SENHA }}
-        run: python run.py
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
