@@ -1,42 +1,48 @@
-name: Atualizar CSV com BOT_CEF
+name: Executar BOT_CEF e Atualizar Dados
 
 on:
   schedule:
     - cron: "0 11,13,20 * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  update_csv:
+  run-bot:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clonar repositório
+      - name: Checkout do código
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false
 
-      - name: 🔄 Configurar Git para commits automáticos
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
+      - name: Configurar ambiente Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: 🚀 Rodar o BOT_CEF para atualizar o CSV
-        run: python run.py
-
-      - name: 📂 Verificar mudanças no CSV
+      - name: Definir variáveis de ambiente
         run: |
-          git status
-          git diff data/dados.csv || echo "Nenhuma mudança detectada"
+          echo "LOGIN=${{ secrets.LOGIN }}" >> $GITHUB_ENV
+          echo "SENHA=${{ secrets.SENHA }}" >> $GITHUB_ENV
 
-      - name: 📤 Adicionar e commitar mudanças
+      - name: Executar o bot
+        run: python bot_cef/scraper.py
+
+      - name: Configurar Git
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Adicionar e commitar mudanças no Git
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
           git add data/dados.csv
-          git commit -m "🔄 Atualizando dados extraídos pelo BOT_CEF" || echo "Nenhuma mudança para commitar"
-
-      - name: ⬆️ Enviar mudanças para o GitHub
-        run: git push
+          git commit -m "Atualizando dados extraídos pelo BOT_CEF" || echo "Nenhuma mudança para commitar"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
