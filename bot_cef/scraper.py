@@ -45,7 +45,6 @@ def fill_login_form(driver):
 def extrair_dados(driver):
     time.sleep(3)
 
-    # 🔹 Simulando a extração de dados fictícios
     dados = [
         {
             "Prazo": "2025-02-10",

@@ -1,48 +1,39 @@
-name: Executar BOT_CEF e Atualizar Dados
+name: Atualizar CSV com BOT_CEF
 
 on:
   schedule:
     - cron: "0 11,13,20 * * *"
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  run-bot:
+  update_csv:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: 📥 Clonar repositório
         uses: actions/checkout@v4
-
-      - name: Configurar ambiente Python
-        uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          persist-credentials: false
 
-      - name: Instalar dependências
-        run: pip install -r requirements.txt
-
-      - name: Definir variáveis de ambiente
-        run: |
-          echo "LOGIN=${{ secrets.LOGIN }}" >> $GITHUB_ENV
-          echo "SENHA=${{ secrets.SENHA }}" >> $GITHUB_ENV
-
-      - name: Executar o bot
-        run: python bot_cef/scraper.py
-
-      - name: Configurar Git
+      - name: 🔄 Configurar Git para commits automáticos
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Adicionar e commitar mudanças no Git
+      - name: 🚀 Rodar o BOT_CEF para atualizar o CSV
+        run: python run.py
+
+      - name: 📂 Verificar mudanças no CSV
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git status
+          git diff data/dados.csv || echo "Nenhuma mudança detectada"
+
+      - name: 📤 Adicionar e commitar mudanças
+        run: |
           git add data/dados.csv
-          git commit -m "Atualizando dados extraídos pelo BOT_CEF" || echo "Nenhuma mudança para commitar"
-          git push
+          git commit -m "🔄 Atualizando dados extraídos pelo BOT_CEF" || echo "Nenhuma mudança para commitar"
+
+      - name: ⬆️ Enviar mudanças para o GitHub
+        run: git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
