@@ -83,3 +83,7 @@ def run_bot():
     finally:
         driver.quit()
         print("✅ Bot finalizado!")
+
+
+if __name__ == "__main__":
+    run_bot()
