@@ -10,8 +10,7 @@ st.set_page_config(
 
 
 @st.cache_data
-def get_gdp_data():
-
+def get_gdp_data(force_update=False):
     DATA_FILENAME = "https://raw.githubusercontent.com/m1caelvr/BOT_CEF/refs/heads/main/data/dados.csv"
     raw_gdp_df = pd.read_csv(DATA_FILENAME)
 
@@ -30,7 +29,9 @@ def get_gdp_data():
     return gdp_df
 
 
-gdp_df = get_gdp_data()
+force_update = st.checkbox("Forçar atualização dos dados", value=False)
+
+gdp_df = get_gdp_data(force_update=force_update)
 
 min_value = gdp_df["Year"].min()
 max_value = gdp_df["Year"].max()
@@ -80,7 +81,6 @@ cols = st.columns(4)
 
 for i, country in enumerate(selected_countries):
     col = cols[i % len(cols)]
-
     with col:
         first_gdp = (
             first_year[first_year["Country Code"] == country]["GDP"].iat[0] / 1000000000
