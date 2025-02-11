@@ -11,7 +11,7 @@ if st.button("Atualizar Dados"):
 
 @st.cache_data
 def get_gdp_data(dummy):
-    DATA_FILENAME = "data\dados.csv"
+    DATA_FILENAME = "https://raw.githubusercontent.com/m1caelvr/BOT_CEF/refs/heads/main/data/dados.csv"
     raw_gdp_df = pd.read_csv(DATA_FILENAME)
     MIN_YEAR = 1960
     MAX_YEAR = 2022
