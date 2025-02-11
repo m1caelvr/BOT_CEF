@@ -35,9 +35,6 @@ gdp_df = get_gdp_data()
 min_value = gdp_df["Year"].min()
 max_value = gdp_df["Year"].max()
 
-st.write(f"Ano mais antigo disponível: {min_value}")
-st.write(f"Ano mais recente disponível: {max_value}")
-
 from_year, to_year = st.slider(
     "Which years are you interested in?",
     min_value=min_value,
