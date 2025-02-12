@@ -5,9 +5,6 @@ import math
 if "refresh" not in st.session_state:
     st.session_state.refresh = 0
 
-if st.button("Atualizar Dados"):
-    st.session_state.refresh += 1
-
 
 @st.cache_data
 def get_gdp_data(dummy):
@@ -24,6 +21,18 @@ def get_gdp_data(dummy):
     gdp_df["Year"] = pd.to_numeric(gdp_df["Year"])
     return gdp_df
 
+
+with st.sidebar:
+    st.header("Menu de Opções")
+
+    with st.sidebar:
+        if st.button(
+            "Atualizar Dados",
+            type="primary",
+            icon=":material/restart_alt:",
+            use_container_width=True,
+        ):
+            st.session_state.refresh += 1
 
 gdp_df = get_gdp_data(st.session_state.refresh)
 
