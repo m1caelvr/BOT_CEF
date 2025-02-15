@@ -1,0 +1,414 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "glob",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "glob",
+        "description": "glob",
+        "detail": "glob",
+        "documentation": {}
+    },
+    {
+        "label": "webdriver",
+        "importPath": "selenium",
+        "description": "selenium",
+        "isExtraImport": true,
+        "detail": "selenium",
+        "documentation": {}
+    },
+    {
+        "label": "Service",
+        "importPath": "selenium.webdriver.chrome.service",
+        "description": "selenium.webdriver.chrome.service",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.service",
+        "documentation": {}
+    },
+    {
+        "label": "Options",
+        "importPath": "selenium.webdriver.chrome.options",
+        "description": "selenium.webdriver.chrome.options",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.options",
+        "documentation": {}
+    },
+    {
+        "label": "By",
+        "importPath": "selenium.webdriver.common.by",
+        "description": "selenium.webdriver.common.by",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.by",
+        "documentation": {}
+    },
+    {
+        "label": "Keys",
+        "importPath": "selenium.webdriver.common.keys",
+        "description": "selenium.webdriver.common.keys",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.keys",
+        "documentation": {}
+    },
+    {
+        "label": "ChromeDriverManager",
+        "importPath": "webdriver_manager.chrome",
+        "description": "webdriver_manager.chrome",
+        "isExtraImport": true,
+        "detail": "webdriver_manager.chrome",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "WebDriverWait",
+        "importPath": "selenium.webdriver.support.ui",
+        "description": "selenium.webdriver.support.ui",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.support.ui",
+        "documentation": {}
+    },
+    {
+        "label": "expected_conditions",
+        "importPath": "selenium.webdriver.support",
+        "description": "selenium.webdriver.support",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.support",
+        "documentation": {}
+    },
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "plotly.express",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "plotly.express",
+        "description": "plotly.express",
+        "detail": "plotly.express",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "Link",
+        "kind": 6,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "class Link:\n    url_eqs = \"https://eqs.arenanet.com.br/\"\n    url_chm = \"https://eqs.arenanet.com.br/dist/#/chm/chamado\" \ndef wait_loading_complete(wait, driver, css_selector=\".p-blockui-document.p-blockui.p-component-overlay\"):\n    try:\n        wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector)))\n        print(\"✅ Loading complete!\")\n    except Exception as e:\n        print(f\"❌ Loading timeout: {e}\")\n        driver.quit()",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "wait_loading_complete",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def wait_loading_complete(wait, driver, css_selector=\".p-blockui-document.p-blockui.p-component-overlay\"):\n    try:\n        wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector)))\n        print(\"✅ Loading complete!\")\n    except Exception as e:\n        print(f\"❌ Loading timeout: {e}\")\n        driver.quit()\n        exit()\ndef init_driver():\n    download_dir = os.path.join(os.getcwd(), \"downloads\")",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "init_driver",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def init_driver():\n    download_dir = os.path.join(os.getcwd(), \"downloads\")\n    if not os.path.exists(download_dir):\n        os.makedirs(download_dir)\n    chrome_options = Options()\n    # chrome_options.add_argument(\"--headless\")\n    chrome_options.add_argument(\"--no-sandbox\")\n    chrome_options.add_argument(\"--disable-dev-shm-usage\")\n    prefs = {\n        \"download.default_directory\": download_dir,",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "access_page",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def access_page(driver, url):\n    driver.get(url)\n    time.sleep(5)\ndef fill_login_form(driver):\n    wait = WebDriverWait(driver, 10)\n    login_input = driver.find_element(By.ID, \"login\")\n    password_input = driver.find_element(By.ID, \"senha\")\n    login_input.send_keys(LOGIN)\n    password_input.send_keys(PASSWORD)\n    login_button = driver.find_element(By.CLASS_NAME, \"p-button-info\")",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "fill_login_form",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def fill_login_form(driver):\n    wait = WebDriverWait(driver, 10)\n    login_input = driver.find_element(By.ID, \"login\")\n    password_input = driver.find_element(By.ID, \"senha\")\n    login_input.send_keys(LOGIN)\n    password_input.send_keys(PASSWORD)\n    login_button = driver.find_element(By.CLASS_NAME, \"p-button-info\")\n    login_button.click()\n    try:\n        wait.until(EC.presence_of_element_located((By.CLASS_NAME, \"layout-tabmenu\")))",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "navigate_to_report",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def navigate_to_report(driver):\n    driver.get(Link.url_chm)\n    print(\"✅ Navigating to report page!\")\n    time.sleep(1)\n    wait = WebDriverWait(driver, 30)\n    wait_loading_complete(wait, driver)\n    time.sleep(1)\n    try:\n        wait.until(EC.presence_of_element_located((By.CLASS_NAME, \"card\")))\n        print(\"✅ Report page loaded!\")",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "click_export_excel",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def click_export_excel(driver):\n    wait = WebDriverWait(driver, 10)\n    try:\n        elements = driver.find_elements(By.CSS_SELECTOR, \".p-d-flex.p-jc-between.p-ai-center\")\n        if len(elements) >= 2:\n            closed_button = elements[2]\n            closed_button.click()\n            print(\"✅ 'Closed' button clicked!\")\n        else:\n            print(\"❌ 'Closed' button not found.\")",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "process_file",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def process_file(file_path):\n    cols = [\"ID\", \"TIPO\", \"ATIVIDADE\", \"LOCAL\", \"RESPONSÁVEL\", \"FECHAMENTO\", \"DURAÇÃO\"]\n    try:\n        df = pd.read_excel(file_path)\n        df = df[cols]\n        df.to_excel(file_path, index=False)\n        dados_folder = os.path.join(os.getcwd(), \"data\")\n        if not os.path.exists(dados_folder):\n            os.makedirs(dados_folder)\n        csv_path = os.path.join(dados_folder, \"dados.csv\")",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "wait_for_download_complete",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def wait_for_download_complete(download_dir, timeout=30):\n    print(\"⏳ Waiting for Excel download...\")\n    data_path = os.path.join(download_dir, \"dados.xlsx\")\n    if os.path.exists(data_path):\n        os.remove(data_path)\n        print(\"🗑️ Old 'dados.xlsx' removed.\")\n    end_time = time.time() + timeout\n    while time.time() < end_time:\n        files = glob.glob(os.path.join(download_dir, \"*.xls*\"))\n        if files:",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "run_bot",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def run_bot():\n    print(\"🔹 Starting BOT_CEF...\")\n    driver, download_dir = init_driver()\n    url = Link.url_eqs\n    try:\n        access_page(driver, url)\n        fill_login_form(driver)\n        navigate_to_report(driver)\n        click_export_excel(driver)\n        downloaded_file = wait_for_download_complete(download_dir)",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "LOGIN",
+        "kind": 5,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "LOGIN = os.getenv(\"LOGIN\")\nPASSWORD = os.getenv(\"SENHA\")\nclass Link:\n    url_eqs = \"https://eqs.arenanet.com.br/\"\n    url_chm = \"https://eqs.arenanet.com.br/dist/#/chm/chamado\" \ndef wait_loading_complete(wait, driver, css_selector=\".p-blockui-document.p-blockui.p-component-overlay\"):\n    try:\n        wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector)))\n        print(\"✅ Loading complete!\")\n    except Exception as e:",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "PASSWORD",
+        "kind": 5,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "PASSWORD = os.getenv(\"SENHA\")\nclass Link:\n    url_eqs = \"https://eqs.arenanet.com.br/\"\n    url_chm = \"https://eqs.arenanet.com.br/dist/#/chm/chamado\" \ndef wait_loading_complete(wait, driver, css_selector=\".p-blockui-document.p-blockui.p-component-overlay\"):\n    try:\n        wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector)))\n        print(\"✅ Loading complete!\")\n    except Exception as e:\n        print(f\"❌ Loading timeout: {e}\")",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "carregar_dados",
+        "kind": 2,
+        "importPath": "dashboard.app",
+        "description": "dashboard.app",
+        "peekOfCode": "def carregar_dados():\n    try:\n        df = pd.read_csv(URL_CSV)\n        df[\"Prazo\"] = pd.to_datetime(df[\"Prazo\"], errors=\"coerce\")\n        return df\n    except Exception as e:\n        st.error(f\"Erro ao carregar os dados: {e}\")\n        return pd.DataFrame()\ndf = carregar_dados()\nif not df.empty:",
+        "detail": "dashboard.app",
+        "documentation": {}
+    },
+    {
+        "label": "URL_CSV",
+        "kind": 5,
+        "importPath": "dashboard.app",
+        "description": "dashboard.app",
+        "peekOfCode": "URL_CSV = (\n    \"https://raw.githubusercontent.com/m1caelvr/BOT_CEF/refs/heads/main/data/dados.csv\"\n)\nst.title(\"📊 Dashboard de Chamados\")\nst.sidebar.header(\"📌 Opções\")\nopcao = st.sidebar.selectbox(\n    \"Escolha uma opção:\", [\"Visão Geral\", \"Gráficos\", \"Tabela\"]\n)\n@st.cache_data\ndef carregar_dados():",
+        "detail": "dashboard.app",
+        "documentation": {}
+    },
+    {
+        "label": "opcao",
+        "kind": 5,
+        "importPath": "dashboard.app",
+        "description": "dashboard.app",
+        "peekOfCode": "opcao = st.sidebar.selectbox(\n    \"Escolha uma opção:\", [\"Visão Geral\", \"Gráficos\", \"Tabela\"]\n)\n@st.cache_data\ndef carregar_dados():\n    try:\n        df = pd.read_csv(URL_CSV)\n        df[\"Prazo\"] = pd.to_datetime(df[\"Prazo\"], errors=\"coerce\")\n        return df\n    except Exception as e:",
+        "detail": "dashboard.app",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "dashboard.app",
+        "description": "dashboard.app",
+        "peekOfCode": "df = carregar_dados()\nif not df.empty:\n    if opcao == \"Visão Geral\":\n        st.write(\"### 📂 Dados Carregados\")\n        st.dataframe(df)\n    elif opcao == \"Gráficos\":\n        st.write(\"### 📊 Gráficos\")\n        if \"Prazo\" in df.columns and \"Valor\" in df.columns:\n            st.write(\"#### 📈 Gráfico de Linha (Prazo x Valor)\")\n            fig, ax = plt.subplots()",
+        "detail": "dashboard.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_service_data",
+        "kind": 2,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "def get_service_data(refresh):\n    DATA_FILENAME = \"data/dados.csv\"\n    df = pd.read_csv(DATA_FILENAME, parse_dates=[\"FECHAMENTO\"])\n    return df\ndf = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    if st.button(\"Atualizar Dados\", type=\"primary\", icon=\":material/restart_alt:\", use_container_width=True):\n        st.session_state.refresh += 1\nselected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "df = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    if st.button(\"Atualizar Dados\", type=\"primary\", icon=\":material/restart_alt:\", use_container_width=True):\n        st.session_state.refresh += 1\nselected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\nst.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "selected_date",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "selected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\nst.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "st.session_state.selected_date",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "st.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "date_options",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "date_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "date_filter",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "date_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date\n    grouped = filtered_df.groupby([\"RESPONSÁVEL\", \"Periodo\"]).size().reset_index(name=\"Ordens de Serviço\")\nelif date_filter in [\"Últimos 7 dias\", \"Últimos 30 dias\", \"Últimos 12 meses\"]:\n    grouped = filtered_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\nall_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "filtered_df",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "filtered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date\n    grouped = filtered_df.groupby([\"RESPONSÁVEL\", \"Periodo\"]).size().reset_index(name=\"Ordens de Serviço\")\nelif date_filter in [\"Últimos 7 dias\", \"Últimos 30 dias\", \"Últimos 12 meses\"]:\n    grouped = filtered_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\nall_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]\nfig = px.bar(",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "all_technicians",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "all_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]\nfig = px.bar(\n    grouped_for_graph,\n    x=\"RESPONSÁVEL\",\n    y=\"Ordens de Serviço\",\n    text=\"Ordens de Serviço\",\n    title=\"Ordens de Serviço por Técnico\",\n    labels={\"RESPONSÁVEL\": \"Técnico\", \"Ordens de Serviço\": \"Quantidade\"},",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "grouped",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "grouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]\nfig = px.bar(\n    grouped_for_graph,\n    x=\"RESPONSÁVEL\",\n    y=\"Ordens de Serviço\",\n    text=\"Ordens de Serviço\",\n    title=\"Ordens de Serviço por Técnico\",\n    labels={\"RESPONSÁVEL\": \"Técnico\", \"Ordens de Serviço\": \"Quantidade\"},\n)",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "grouped_for_graph",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "grouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]\nfig = px.bar(\n    grouped_for_graph,\n    x=\"RESPONSÁVEL\",\n    y=\"Ordens de Serviço\",\n    text=\"Ordens de Serviço\",\n    title=\"Ordens de Serviço por Técnico\",\n    labels={\"RESPONSÁVEL\": \"Técnico\", \"Ordens de Serviço\": \"Quantidade\"},\n)\nfig.update_traces(textposition=\"outside\")",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "fig",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "fig = px.bar(\n    grouped_for_graph,\n    x=\"RESPONSÁVEL\",\n    y=\"Ordens de Serviço\",\n    text=\"Ordens de Serviço\",\n    title=\"Ordens de Serviço por Técnico\",\n    labels={\"RESPONSÁVEL\": \"Técnico\", \"Ordens de Serviço\": \"Quantidade\"},\n)\nfig.update_traces(textposition=\"outside\")\nst.header(\"Ordens de Serviço por Técnico\", divider=\"gray\")",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "grouped",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "grouped = grouped.sort_values(by=\"Ordens de Serviço\", ascending=False)\nif date_filter == \"Hoje\":\n    current_start = selected_date\n    current_end = selected_date\n    previous_start = selected_date - timedelta(days=1)\n    previous_end = selected_date - timedelta(days=1)\nelif date_filter == \"Últimos 7 dias\":\n    current_start = selected_date - timedelta(days=7)\n    current_end = selected_date\n    previous_start = selected_date - timedelta(days=14)",
+        "detail": "streamlit_app",
+        "documentation": {}
+    },
+    {
+        "label": "cols",
+        "kind": 5,
+        "importPath": "streamlit_app",
+        "description": "streamlit_app",
+        "peekOfCode": "cols = st.columns(4)\nfor i, row in grouped.iterrows():\n    col = cols[i % len(cols)]\n    previous_df = df[\n        (df[\"FECHAMENTO\"].dt.date >= previous_start) &\n        (df[\"FECHAMENTO\"].dt.date <= previous_end)\n    ]\n    previous_grouped = previous_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\n    previous_value = previous_grouped.loc[\n        previous_grouped[\"RESPONSÁVEL\"] == row[\"RESPONSÁVEL\"],",
+        "detail": "streamlit_app",
+        "documentation": {}
+    }
+]

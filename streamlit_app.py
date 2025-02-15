@@ -1,98 +1,119 @@
 import streamlit as st
 import pandas as pd
-import math
+import plotly.express as px
+from datetime import datetime, timedelta
 
 if "refresh" not in st.session_state:
     st.session_state.refresh = 0
-
+if "selected_date" not in st.session_state:
+    st.session_state.selected_date = datetime.today().date()
 
 @st.cache_data
-def get_gdp_data(dummy):
-    DATA_FILENAME = "https://raw.githubusercontent.com/m1caelvr/BOT_CEF/refs/heads/main/data/dados.csv"
-    raw_gdp_df = pd.read_csv(DATA_FILENAME)
-    MIN_YEAR = 1960
-    MAX_YEAR = 2022
-    gdp_df = raw_gdp_df.melt(
-        ["Country Code"],
-        [str(x) for x in range(MIN_YEAR, MAX_YEAR + 1)],
-        "Year",
-        "GDP",
-    )
-    gdp_df["Year"] = pd.to_numeric(gdp_df["Year"])
-    return gdp_df
+def get_service_data(refresh):
+    DATA_FILENAME = "data/dados.csv"
+    df = pd.read_csv(DATA_FILENAME, parse_dates=["FECHAMENTO"])
+    return df
 
+df = get_service_data(st.session_state.refresh)
 
 with st.sidebar:
     st.header("Menu de Opções")
+    if st.button("Atualizar Dados", type="primary", icon=":material/restart_alt:", use_container_width=True):
+        st.session_state.refresh += 1
 
-    with st.sidebar:
-        if st.button(
-            "Atualizar Dados",
-            type="primary",
-            icon=":material/restart_alt:",
-            use_container_width=True,
-        ):
-            st.session_state.refresh += 1
+selected_date = st.date_input("Selecionar Data Base:", st.session_state.selected_date)
+st.session_state.selected_date = selected_date
 
-gdp_df = get_gdp_data(st.session_state.refresh)
+date_options = {
+    "Hoje": selected_date,
+    "Últimos 7 dias": selected_date - timedelta(days=7),
+    "Últimos 30 dias": selected_date - timedelta(days=30),
+    "Últimos 12 meses": selected_date - timedelta(days=365),
+}
 
-min_value = gdp_df["Year"].min()
-max_value = gdp_df["Year"].max()
-from_year, to_year = st.slider(
-    "Which years are you interested in?",
-    min_value=min_value,
-    max_value=max_value,
-    value=[min_value, max_value],
+date_filter = st.selectbox("Filtrar por período:", list(date_options.keys()))
+filtered_df = df[df["FECHAMENTO"].dt.date >= date_options[date_filter]].copy()
+
+if date_filter == "Hoje":
+    filtered_df["Periodo"] = selected_date
+    grouped = filtered_df.groupby(["RESPONSÁVEL", "Periodo"]).size().reset_index(name="Ordens de Serviço")
+elif date_filter in ["Últimos 7 dias", "Últimos 30 dias", "Últimos 12 meses"]:
+    grouped = filtered_df.groupby("RESPONSÁVEL").size().reset_index(name="Ordens de Serviço")
+
+all_technicians = df["RESPONSÁVEL"].unique()
+grouped = grouped.set_index("RESPONSÁVEL").reindex(all_technicians, fill_value=0).reset_index()
+
+grouped_for_graph = grouped[grouped["Ordens de Serviço"] > 0]
+
+fig = px.bar(
+    grouped_for_graph,
+    x="RESPONSÁVEL",
+    y="Ordens de Serviço",
+    text="Ordens de Serviço",
+    title="Ordens de Serviço por Técnico",
+    labels={"RESPONSÁVEL": "Técnico", "Ordens de Serviço": "Quantidade"},
 )
-countries = gdp_df["Country Code"].unique()
-if not len(countries):
-    st.warning("Select at least one country")
-selected_countries = st.multiselect(
-    "Which countries would you like to view?",
-    countries,
-    ["DEU", "FRA", "GBR", "BRA", "MEX", "JPN"],
-)
-filtered_gdp_df = gdp_df[
-    (gdp_df["Country Code"].isin(selected_countries))
-    & (gdp_df["Year"] <= to_year)
-    & (from_year <= gdp_df["Year"])
-]
-st.header("GDP over time", divider="gray")
-st.line_chart(
-    filtered_gdp_df,
-    x="Year",
-    y="GDP",
-    color="Country Code",
-)
+fig.update_traces(textposition="outside")
 
-first_year = gdp_df[gdp_df["Year"] == from_year]
-last_year = gdp_df[gdp_df["Year"] == to_year]
+st.header("Ordens de Serviço por Técnico", divider="gray")
+st.plotly_chart(fig)
 
-st.header(f"GDP in {to_year}", divider="gray")
+st.header("Resumo das Ordens de Serviço", divider="gray")
+
+grouped = grouped.sort_values(by="Ordens de Serviço", ascending=False)
+
+if date_filter == "Hoje":
+    current_start = selected_date
+    current_end = selected_date
+    previous_start = selected_date - timedelta(days=1)
+    previous_end = selected_date - timedelta(days=1)
+elif date_filter == "Últimos 7 dias":
+    current_start = selected_date - timedelta(days=7)
+    current_end = selected_date
+    previous_start = selected_date - timedelta(days=14)
+    previous_end = selected_date - timedelta(days=7)
+elif date_filter == "Últimos 30 dias":
+    current_start = selected_date - timedelta(days=30)
+    current_end = selected_date
+    previous_start = selected_date - timedelta(days=60)
+    previous_end = selected_date - timedelta(days=30)
+elif date_filter == "Últimos 12 meses":
+    current_start = selected_date - timedelta(days=365)
+    current_end = selected_date
+    previous_start = selected_date - timedelta(days=730)
+    previous_end = selected_date - timedelta(days=365)
 
 cols = st.columns(4)
 
-for i, country in enumerate(selected_countries):
+for i, row in grouped.iterrows():
     col = cols[i % len(cols)]
+    
+    previous_df = df[
+        (df["FECHAMENTO"].dt.date >= previous_start) &
+        (df["FECHAMENTO"].dt.date <= previous_end)
+    ]
+    previous_grouped = previous_df.groupby("RESPONSÁVEL").size().reset_index(name="Ordens de Serviço")
+    previous_value = previous_grouped.loc[
+        previous_grouped["RESPONSÁVEL"] == row["RESPONSÁVEL"],
+        "Ordens de Serviço"
+    ].sum()
+
+    if previous_value > 0:
+        growth_value = row["Ordens de Serviço"] - previous_value
+        growth = f"{growth_value:+d}"
+    else:
+        growth_value = 0
+        growth = "0"
+    
+    if growth_value > 0 or growth_value < 0:
+        delta_color = "normal"
+    else:
+        delta_color = "off"
 
     with col:
-        first_gdp = (
-            first_year[first_year["Country Code"] == country]["GDP"].iat[0] / 1000000000
-        )
-        last_gdp = (
-            last_year[last_year["Country Code"] == country]["GDP"].iat[0] / 1000000000
-        )
-
-        if math.isnan(first_gdp):
-            growth = "n/a"
-            delta_color = "off"
-        else:
-            growth = f"{last_gdp / first_gdp:,.2f}x"
-            delta_color = "normal"
-
         st.metric(
-            label=f"{country} GDP",
-            value=f"{last_gdp:,.0f}B",
+            label=str(row["RESPONSÁVEL"]),
+            value=f"{int(row['Ordens de Serviço'])}",
             delta=growth,
             delta_color=delta_color,
         )
