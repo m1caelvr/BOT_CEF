@@ -165,7 +165,7 @@ def run_bot():
             print(f"📂 File available at: {downloaded_file}")
             process_file(downloaded_file)
     finally:
-        # driver.quit()
+        driver.quit()
         print("✅ Bot finished!")
 
 if __name__ == "__main__":
