@@ -10,7 +10,7 @@ if "selected_date" not in st.session_state:
 
 @st.cache_data
 def get_service_data(refresh):
-    DATA_FILENAME = "data/dados.csv"
+    DATA_FILENAME = "https://raw.githubusercontent.com/m1caelvr/BOT_CEF/b235d5e78e41cee3baf2c080626087983415aa45/data/dados.csv"
     df = pd.read_csv(DATA_FILENAME, parse_dates=["FECHAMENTO"])
     return df
 

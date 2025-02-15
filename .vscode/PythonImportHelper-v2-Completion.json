@@ -300,7 +300,7 @@
         "kind": 2,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "def get_service_data(refresh):\n    DATA_FILENAME = \"data/dados.csv\"\n    df = pd.read_csv(DATA_FILENAME, parse_dates=[\"FECHAMENTO\"])\n    return df\ndf = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    if st.button(\"Atualizar Dados\", type=\"primary\", icon=\":material/restart_alt:\", use_container_width=True):\n        st.session_state.refresh += 1\nselected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)",
+        "peekOfCode": "def get_service_data(refresh):\n    DATA_FILENAME = \"https://raw.githubusercontent.com/m1caelvr/BOT_CEF/b235d5e78e41cee3baf2c080626087983415aa45/data/dados.csv\"\n    df = pd.read_csv(DATA_FILENAME, parse_dates=[\"FECHAMENTO\"])\n    return df\ndf = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    if st.button(\"Atualizar Dados\", type=\"primary\", icon=\":material/restart_alt:\", use_container_width=True):\n        st.session_state.refresh += 1\nselected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)",
         "detail": "streamlit_app",
         "documentation": {}
     },
