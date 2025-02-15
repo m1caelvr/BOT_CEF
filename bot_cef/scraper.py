@@ -114,23 +114,6 @@ def click_export_excel(driver):
         print(f"❌ Error clicking export button: {e}")
         raise
     wait_loading_complete(wait, driver)
-    
-def process_file(file_path):
-    cols = ["ID", "TIPO", "ATIVIDADE", "LOCAL", "RESPONSÁVEL", "FECHAMENTO", "DURAÇÃO"]
-    try:
-        df = pd.read_excel(file_path)
-        df = df[cols]
-        df.to_excel(file_path, index=False)
-        dados_folder = os.path.join(os.getcwd(), "data")
-        if not os.path.exists(dados_folder):
-            os.makedirs(dados_folder)
-        csv_path = os.path.join(dados_folder, "dados.csv")
-        df.to_csv(csv_path, index=False)
-        print(f"✅ File processed and saved at: {file_path} and CSV updated at: {csv_path}")
-        return file_path
-    except Exception as e:
-        print(f"❌ Error processing file: {e}")
-        return None
 
 def wait_for_download_complete(download_dir, timeout=30):
     print("⏳ Waiting for Excel download...")
@@ -150,6 +133,23 @@ def wait_for_download_complete(download_dir, timeout=30):
         time.sleep(1)
     print("❌ Timeout! No file was downloaded.")
     return None
+
+def process_file(file_path):
+    cols = ["ID", "TIPO", "ATIVIDADE", "LOCAL", "RESPONSÁVEL", "FECHAMENTO", "DURAÇÃO"]
+    try:
+        df = pd.read_excel(file_path)
+        df = df[cols]
+        df.to_excel(file_path, index=False)
+        dados_folder = os.path.join(os.getcwd(), "data")
+        if not os.path.exists(dados_folder):
+            os.makedirs(dados_folder)
+        csv_path = os.path.join(dados_folder, "dados.csv")
+        df.to_csv(csv_path, index=False)
+        print(f"✅ File processed and saved at: {file_path} and CSV updated at: {csv_path}")
+        return file_path
+    except Exception as e:
+        print(f"❌ Error processing file: {e}")
+        return None
 
 def run_bot():
     print("🔹 Starting BOT_CEF...")

@@ -215,20 +215,20 @@
         "documentation": {}
     },
     {
-        "label": "process_file",
-        "kind": 2,
-        "importPath": "bot_cef.scraper",
-        "description": "bot_cef.scraper",
-        "peekOfCode": "def process_file(file_path):\n    cols = [\"ID\", \"TIPO\", \"ATIVIDADE\", \"LOCAL\", \"RESPONSÁVEL\", \"FECHAMENTO\", \"DURAÇÃO\"]\n    try:\n        df = pd.read_excel(file_path)\n        df = df[cols]\n        df.to_excel(file_path, index=False)\n        dados_folder = os.path.join(os.getcwd(), \"data\")\n        if not os.path.exists(dados_folder):\n            os.makedirs(dados_folder)\n        csv_path = os.path.join(dados_folder, \"dados.csv\")",
-        "detail": "bot_cef.scraper",
-        "documentation": {}
-    },
-    {
         "label": "wait_for_download_complete",
         "kind": 2,
         "importPath": "bot_cef.scraper",
         "description": "bot_cef.scraper",
         "peekOfCode": "def wait_for_download_complete(download_dir, timeout=30):\n    print(\"⏳ Waiting for Excel download...\")\n    data_path = os.path.join(download_dir, \"dados.xlsx\")\n    if os.path.exists(data_path):\n        os.remove(data_path)\n        print(\"🗑️ Old 'dados.xlsx' removed.\")\n    end_time = time.time() + timeout\n    while time.time() < end_time:\n        files = glob.glob(os.path.join(download_dir, \"*.xls*\"))\n        if files:",
+        "detail": "bot_cef.scraper",
+        "documentation": {}
+    },
+    {
+        "label": "process_file",
+        "kind": 2,
+        "importPath": "bot_cef.scraper",
+        "description": "bot_cef.scraper",
+        "peekOfCode": "def process_file(file_path):\n    cols = [\"ID\", \"TIPO\", \"ATIVIDADE\", \"LOCAL\", \"RESPONSÁVEL\", \"FECHAMENTO\", \"DURAÇÃO\"]\n    try:\n        df = pd.read_excel(file_path)\n        df = df[cols]\n        df.to_excel(file_path, index=False)\n        dados_folder = os.path.join(os.getcwd(), \"data\")\n        if not os.path.exists(dados_folder):\n            os.makedirs(dados_folder)\n        csv_path = os.path.join(dados_folder, \"dados.csv\")",
         "detail": "bot_cef.scraper",
         "documentation": {}
     },
