@@ -39,9 +39,7 @@ jobs:
 
       - name: Adicionar e commitar mudanças no Git
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git commit -m "Atualizando dados extraídos pelo BOT_CEF" || echo "Nenhuma mudança para commitar"
-          git push
+          git add data/dados.csv
+          git diff --cached --quiet || (git commit -m "Atualizando dados extraídos pelo BOT_CEF" && git push)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
