@@ -18,21 +18,22 @@ df = get_service_data(st.session_state.refresh)
 
 with st.sidebar:
     st.header("Menu de Opções")
+
+    selected_date = st.date_input("Selecionar Data Base:", st.session_state.selected_date)
+    st.session_state.selected_date = selected_date
+
+    date_options = {
+        "Hoje": selected_date,
+        "Últimos 7 dias": selected_date - timedelta(days=7),
+        "Últimos 30 dias": selected_date - timedelta(days=30),
+        "Últimos 12 meses": selected_date - timedelta(days=365),
+    }
+
+    date_filter = st.selectbox("Filtrar por período:", list(date_options.keys()), index=2)
+    filtered_df = df[df["FECHAMENTO"].dt.date >= date_options[date_filter]].copy()
+    
     if st.button("Atualizar Dados", type="primary", icon=":material/restart_alt:", use_container_width=True):
         st.session_state.refresh += 1
-
-selected_date = st.date_input("Selecionar Data Base:", st.session_state.selected_date)
-st.session_state.selected_date = selected_date
-
-date_options = {
-    "Hoje": selected_date,
-    "Últimos 7 dias": selected_date - timedelta(days=7),
-    "Últimos 30 dias": selected_date - timedelta(days=30),
-    "Últimos 12 meses": selected_date - timedelta(days=365),
-}
-
-date_filter = st.selectbox("Filtrar por período:", list(date_options.keys()), index=2)
-filtered_df = df[df["FECHAMENTO"].dt.date >= date_options[date_filter]].copy()
 
 if date_filter == "Hoje":
     filtered_df["Periodo"] = selected_date
@@ -56,7 +57,7 @@ fig = px.bar(
 fig.update_traces(textposition="outside")
 fig.update_layout(height=550)
 
-st.header("Ordens de Serviço por Técnico", divider="gray")
+st.header("Quantidade de OSs fechadas por Técnico", divider="gray")
 st.plotly_chart(fig)
 
 st.header("Resumo das Ordens de Serviço", divider="gray")

@@ -300,7 +300,7 @@
         "kind": 2,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "def get_service_data(refresh):\n    DATA_FILENAME = \"https://raw.githubusercontent.com/m1caelvr/BOT_CEF/b235d5e78e41cee3baf2c080626087983415aa45/data/dados.csv\"\n    df = pd.read_csv(DATA_FILENAME, parse_dates=[\"FECHAMENTO\"])\n    return df\ndf = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    if st.button(\"Atualizar Dados\", type=\"primary\", icon=\":material/restart_alt:\", use_container_width=True):\n        st.session_state.refresh += 1\nselected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)",
+        "peekOfCode": "def get_service_data(refresh):\n    DATA_FILENAME = \"https://raw.githubusercontent.com/m1caelvr/BOT_CEF/b235d5e78e41cee3baf2c080626087983415aa45/data/dados.csv\"\n    df = pd.read_csv(DATA_FILENAME, parse_dates=[\"FECHAMENTO\"])\n    return df\ndf = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    selected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\n    st.session_state.selected_date = selected_date\n    date_options = {",
         "detail": "streamlit_app",
         "documentation": {}
     },
@@ -309,52 +309,7 @@
         "kind": 5,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "df = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    if st.button(\"Atualizar Dados\", type=\"primary\", icon=\":material/restart_alt:\", use_container_width=True):\n        st.session_state.refresh += 1\nselected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\nst.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),",
-        "detail": "streamlit_app",
-        "documentation": {}
-    },
-    {
-        "label": "selected_date",
-        "kind": 5,
-        "importPath": "streamlit_app",
-        "description": "streamlit_app",
-        "peekOfCode": "selected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\nst.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()",
-        "detail": "streamlit_app",
-        "documentation": {}
-    },
-    {
-        "label": "st.session_state.selected_date",
-        "kind": 5,
-        "importPath": "streamlit_app",
-        "description": "streamlit_app",
-        "peekOfCode": "st.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":",
-        "detail": "streamlit_app",
-        "documentation": {}
-    },
-    {
-        "label": "date_options",
-        "kind": 5,
-        "importPath": "streamlit_app",
-        "description": "streamlit_app",
-        "peekOfCode": "date_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date",
-        "detail": "streamlit_app",
-        "documentation": {}
-    },
-    {
-        "label": "date_filter",
-        "kind": 5,
-        "importPath": "streamlit_app",
-        "description": "streamlit_app",
-        "peekOfCode": "date_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date\n    grouped = filtered_df.groupby([\"RESPONSÁVEL\", \"Periodo\"]).size().reset_index(name=\"Ordens de Serviço\")\nelif date_filter in [\"Últimos 7 dias\", \"Últimos 30 dias\", \"Últimos 12 meses\"]:\n    grouped = filtered_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\nall_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]",
-        "detail": "streamlit_app",
-        "documentation": {}
-    },
-    {
-        "label": "filtered_df",
-        "kind": 5,
-        "importPath": "streamlit_app",
-        "description": "streamlit_app",
-        "peekOfCode": "filtered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date\n    grouped = filtered_df.groupby([\"RESPONSÁVEL\", \"Periodo\"]).size().reset_index(name=\"Ordens de Serviço\")\nelif date_filter in [\"Últimos 7 dias\", \"Últimos 30 dias\", \"Últimos 12 meses\"]:\n    grouped = filtered_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\nall_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]\nfig = px.bar(",
+        "peekOfCode": "df = get_service_data(st.session_state.refresh)\nwith st.sidebar:\n    st.header(\"Menu de Opções\")\n    selected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\n    st.session_state.selected_date = selected_date\n    date_options = {\n        \"Hoje\": selected_date,\n        \"Últimos 7 dias\": selected_date - timedelta(days=7),\n        \"Últimos 30 dias\": selected_date - timedelta(days=30),\n        \"Últimos 12 meses\": selected_date - timedelta(days=365),",
         "detail": "streamlit_app",
         "documentation": {}
     },
