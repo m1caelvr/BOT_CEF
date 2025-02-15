@@ -1,15 +1,15 @@
 import os
-import pandas as pd
 import time
 import glob
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from webdriver_manager.chrome import ChromeDriverManager
+import tempfile
+import pandas as pd
 from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 
 if os.getenv("GITHUB_ACTIONS") is None:
@@ -32,13 +32,18 @@ def wait_loading_complete(wait, driver, css_selector=".p-blockui-document.p-bloc
         exit()
 
 def init_driver():
+    temp_user_data_dir = tempfile.mkdtemp()
     download_dir = os.path.join(os.getcwd(), "downloads")
+    
     if not os.path.exists(download_dir):
         os.makedirs(download_dir)
+        
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument(f"user-data-dir={temp_user_data_dir}")
+    
     prefs = {
         "download.default_directory": download_dir,
         "download.prompt_for_download": False,

@@ -9,15 +9,6 @@
         "documentation": {}
     },
     {
-        "label": "pandas",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pandas",
-        "description": "pandas",
-        "detail": "pandas",
-        "documentation": {}
-    },
-    {
         "label": "time",
         "kind": 6,
         "isExtraImport": true,
@@ -36,51 +27,21 @@
         "documentation": {}
     },
     {
-        "label": "webdriver",
-        "importPath": "selenium",
-        "description": "selenium",
+        "label": "tempfile",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "selenium",
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
         "documentation": {}
     },
     {
-        "label": "Service",
-        "importPath": "selenium.webdriver.chrome.service",
-        "description": "selenium.webdriver.chrome.service",
+        "label": "pandas",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "selenium.webdriver.chrome.service",
-        "documentation": {}
-    },
-    {
-        "label": "Options",
-        "importPath": "selenium.webdriver.chrome.options",
-        "description": "selenium.webdriver.chrome.options",
-        "isExtraImport": true,
-        "detail": "selenium.webdriver.chrome.options",
-        "documentation": {}
-    },
-    {
-        "label": "By",
-        "importPath": "selenium.webdriver.common.by",
-        "description": "selenium.webdriver.common.by",
-        "isExtraImport": true,
-        "detail": "selenium.webdriver.common.by",
-        "documentation": {}
-    },
-    {
-        "label": "Keys",
-        "importPath": "selenium.webdriver.common.keys",
-        "description": "selenium.webdriver.common.keys",
-        "isExtraImport": true,
-        "detail": "selenium.webdriver.common.keys",
-        "documentation": {}
-    },
-    {
-        "label": "ChromeDriverManager",
-        "importPath": "webdriver_manager.chrome",
-        "description": "webdriver_manager.chrome",
-        "isExtraImport": true,
-        "detail": "webdriver_manager.chrome",
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
         "documentation": {}
     },
     {
@@ -92,11 +53,51 @@
         "documentation": {}
     },
     {
+        "label": "webdriver",
+        "importPath": "selenium",
+        "description": "selenium",
+        "isExtraImport": true,
+        "detail": "selenium",
+        "documentation": {}
+    },
+    {
+        "label": "By",
+        "importPath": "selenium.webdriver.common.by",
+        "description": "selenium.webdriver.common.by",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.by",
+        "documentation": {}
+    },
+    {
+        "label": "Options",
+        "importPath": "selenium.webdriver.chrome.options",
+        "description": "selenium.webdriver.chrome.options",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.options",
+        "documentation": {}
+    },
+    {
+        "label": "Service",
+        "importPath": "selenium.webdriver.chrome.service",
+        "description": "selenium.webdriver.chrome.service",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.service",
+        "documentation": {}
+    },
+    {
         "label": "WebDriverWait",
         "importPath": "selenium.webdriver.support.ui",
         "description": "selenium.webdriver.support.ui",
         "isExtraImport": true,
         "detail": "selenium.webdriver.support.ui",
+        "documentation": {}
+    },
+    {
+        "label": "ChromeDriverManager",
+        "importPath": "webdriver_manager.chrome",
+        "description": "webdriver_manager.chrome",
+        "isExtraImport": true,
+        "detail": "webdriver_manager.chrome",
         "documentation": {}
     },
     {
@@ -164,7 +165,7 @@
         "kind": 2,
         "importPath": "bot_cef.scraper",
         "description": "bot_cef.scraper",
-        "peekOfCode": "def wait_loading_complete(wait, driver, css_selector=\".p-blockui-document.p-blockui.p-component-overlay\"):\n    try:\n        wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector)))\n        print(\"✅ Loading complete!\")\n    except Exception as e:\n        print(f\"❌ Loading timeout: {e}\")\n        driver.quit()\n        exit()\ndef init_driver():\n    download_dir = os.path.join(os.getcwd(), \"downloads\")",
+        "peekOfCode": "def wait_loading_complete(wait, driver, css_selector=\".p-blockui-document.p-blockui.p-component-overlay\"):\n    try:\n        wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector)))\n        print(\"✅ Loading complete!\")\n    except Exception as e:\n        print(f\"❌ Loading timeout: {e}\")\n        driver.quit()\n        exit()\ndef init_driver():\n    temp_user_data_dir = tempfile.mkdtemp()",
         "detail": "bot_cef.scraper",
         "documentation": {}
     },
@@ -173,7 +174,7 @@
         "kind": 2,
         "importPath": "bot_cef.scraper",
         "description": "bot_cef.scraper",
-        "peekOfCode": "def init_driver():\n    download_dir = os.path.join(os.getcwd(), \"downloads\")\n    if not os.path.exists(download_dir):\n        os.makedirs(download_dir)\n    chrome_options = Options()\n    # chrome_options.add_argument(\"--headless\")\n    chrome_options.add_argument(\"--no-sandbox\")\n    chrome_options.add_argument(\"--disable-dev-shm-usage\")\n    prefs = {\n        \"download.default_directory\": download_dir,",
+        "peekOfCode": "def init_driver():\n    temp_user_data_dir = tempfile.mkdtemp()\n    download_dir = os.path.join(os.getcwd(), \"downloads\")\n    if not os.path.exists(download_dir):\n        os.makedirs(download_dir)\n    chrome_options = Options()\n    chrome_options.add_argument(\"--headless\")\n    chrome_options.add_argument(\"--no-sandbox\")\n    chrome_options.add_argument(\"--disable-dev-shm-usage\")\n    chrome_options.add_argument(f\"user-data-dir={temp_user_data_dir}\")",
         "detail": "bot_cef.scraper",
         "documentation": {}
     },
@@ -317,7 +318,7 @@
         "kind": 5,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "selected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\nst.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()",
+        "peekOfCode": "selected_date = st.date_input(\"Selecionar Data Base:\", st.session_state.selected_date)\nst.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()",
         "detail": "streamlit_app",
         "documentation": {}
     },
@@ -326,7 +327,7 @@
         "kind": 5,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "st.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":",
+        "peekOfCode": "st.session_state.selected_date = selected_date\ndate_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":",
         "detail": "streamlit_app",
         "documentation": {}
     },
@@ -335,7 +336,7 @@
         "kind": 5,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "date_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date",
+        "peekOfCode": "date_options = {\n    \"Hoje\": selected_date,\n    \"Últimos 7 dias\": selected_date - timedelta(days=7),\n    \"Últimos 30 dias\": selected_date - timedelta(days=30),\n    \"Últimos 12 meses\": selected_date - timedelta(days=365),\n}\ndate_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date",
         "detail": "streamlit_app",
         "documentation": {}
     },
@@ -344,7 +345,7 @@
         "kind": 5,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "date_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()))\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date\n    grouped = filtered_df.groupby([\"RESPONSÁVEL\", \"Periodo\"]).size().reset_index(name=\"Ordens de Serviço\")\nelif date_filter in [\"Últimos 7 dias\", \"Últimos 30 dias\", \"Últimos 12 meses\"]:\n    grouped = filtered_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\nall_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]",
+        "peekOfCode": "date_filter = st.selectbox(\"Filtrar por período:\", list(date_options.keys()), index=2)\nfiltered_df = df[df[\"FECHAMENTO\"].dt.date >= date_options[date_filter]].copy()\nif date_filter == \"Hoje\":\n    filtered_df[\"Periodo\"] = selected_date\n    grouped = filtered_df.groupby([\"RESPONSÁVEL\", \"Periodo\"]).size().reset_index(name=\"Ordens de Serviço\")\nelif date_filter in [\"Últimos 7 dias\", \"Últimos 30 dias\", \"Últimos 12 meses\"]:\n    grouped = filtered_df.groupby(\"RESPONSÁVEL\").size().reset_index(name=\"Ordens de Serviço\")\nall_technicians = df[\"RESPONSÁVEL\"].unique()\ngrouped = grouped.set_index(\"RESPONSÁVEL\").reindex(all_technicians, fill_value=0).reset_index()\ngrouped_for_graph = grouped[grouped[\"Ordens de Serviço\"] > 0]",
         "detail": "streamlit_app",
         "documentation": {}
     },
@@ -389,7 +390,7 @@
         "kind": 5,
         "importPath": "streamlit_app",
         "description": "streamlit_app",
-        "peekOfCode": "fig = px.bar(\n    grouped_for_graph,\n    x=\"RESPONSÁVEL\",\n    y=\"Ordens de Serviço\",\n    text=\"Ordens de Serviço\",\n    title=\"Ordens de Serviço por Técnico\",\n    labels={\"RESPONSÁVEL\": \"Técnico\", \"Ordens de Serviço\": \"Quantidade\"},\n)\nfig.update_traces(textposition=\"outside\")\nst.header(\"Ordens de Serviço por Técnico\", divider=\"gray\")",
+        "peekOfCode": "fig = px.bar(\n    grouped_for_graph,\n    x=\"RESPONSÁVEL\",\n    y=\"Ordens de Serviço\",\n    text=\"Ordens de Serviço\",\n    title=\"Ordens de Serviço por Técnico\",\n    labels={\"RESPONSÁVEL\": \"Técnico\", \"Ordens de Serviço\": \"Quantidade\"},\n)\nfig.update_traces(textposition=\"outside\")\nfig.update_layout(height=550)",
         "detail": "streamlit_app",
         "documentation": {}
     },

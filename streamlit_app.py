@@ -31,7 +31,7 @@ date_options = {
     "Últimos 12 meses": selected_date - timedelta(days=365),
 }
 
-date_filter = st.selectbox("Filtrar por período:", list(date_options.keys()))
+date_filter = st.selectbox("Filtrar por período:", list(date_options.keys()), index=2)
 filtered_df = df[df["FECHAMENTO"].dt.date >= date_options[date_filter]].copy()
 
 if date_filter == "Hoje":
@@ -54,6 +54,7 @@ fig = px.bar(
     labels={"RESPONSÁVEL": "Técnico", "Ordens de Serviço": "Quantidade"},
 )
 fig.update_traces(textposition="outside")
+fig.update_layout(height=550)
 
 st.header("Ordens de Serviço por Técnico", divider="gray")
 st.plotly_chart(fig)
